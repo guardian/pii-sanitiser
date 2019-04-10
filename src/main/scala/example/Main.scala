@@ -3,8 +3,9 @@ package example
 import java.util.Properties
 import edu.stanford.nlp.pipeline.{CoreDocument, StanfordCoreNLP}
 import scala.io.Source
+import scala.collection.JavaConverters._
 
-object Hello extends App {
+object Main extends App {
   val lines = Source.fromFile("file.txt").getLines
 
   val props = new Properties
@@ -19,8 +20,12 @@ object Hello extends App {
 
   val pipeline = new StanfordCoreNLP(props)
 
-  val doc = new CoreDocument("mario@gu.com heloo world")
+  val line = List("E11 mario@gu.com heloo world")
+  val doc = new CoreDocument(line.head)
   pipeline.annotate(doc)
-  doc.entityMentions().forEach(em => println(s"${em.text} : ${em.entityType()}"))
+  val rawLine = doc.tokens.asScala.toList.map(_.word)
+  doc.entityMentions().asScala.toList.foreach(em => println(s"${em.text} : ${em.entityType()}"))
+  val piiLine = doc.entityMentions().asScala.toList.map(_.text)
+  println(rawLine.diff(piiLine))
 }
 

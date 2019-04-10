@@ -1,4 +1,4 @@
-package example
+package sanitiser
 
 import org.scalatest._
 

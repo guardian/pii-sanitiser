@@ -1,2 +1,0 @@
-(\d+|\w+) (street|road|ave|avenue|drive|lane)	ADDRESS	MISC	1.0
-(\d+\w+|\w+\d+)	CODE	O	1.0
